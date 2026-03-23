@@ -19,7 +19,7 @@ export const useAuth = () => {
         }
 
         if(data.code == "success") {
-            console.log(data.message);
+          console.log(data);
           setIsLogin(true);
 
           if(data.infoUser) {
