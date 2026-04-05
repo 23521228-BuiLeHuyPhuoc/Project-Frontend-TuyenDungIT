@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 
 export const HeaderAccount = () => {
   const router = useRouter();
-  const { isLogin, infoUser } = useAuth();
+  const { isLogin, infoUser, infoCompany } = useAuth();
   const handleLogout=()=>{
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,{
       credentials:"include",
@@ -47,30 +47,34 @@ export const HeaderAccount = () => {
               </>
             )}
 
-            {/* Đã đăng nhập compnay */}
-            {/* <Link href="#" className="">LG Elect...</Link>
-            <ul className="absolute top-[100%] right-[0px] w-[200px] bg-[#000065] hidden group-hover/sub-1:block z-[999]">
-              <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
-                <Link href="" className="text-white font-[600] text-[16px]">
-                  Thông tin công ty
-                </Link>
-              </li>
-              <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
-                <Link href="" className="text-white font-[600] text-[16px]">
-                  Quản lý công việc
-                </Link>
-              </li>
-              <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
-                <Link href="" className="text-white font-[600] text-[16px]">
-                  Quản lý CV
-                </Link>
-              </li>
-              <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
-                <Link href="" className="text-white font-[600] text-[16px]">
-                  Đăng xuất
-                </Link>
-              </li>
-            </ul> */}
+            {/* Đã đăng nhập company */}
+            {infoCompany && (
+              <>
+                <Link href="#" className="">{infoCompany.companyName}</Link>
+                <ul className="absolute top-[100%] right-[0px] w-[200px] bg-[#000065] hidden group-hover/sub-1:block z-[999]">
+                  <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
+                    <Link href="" className="text-white font-[600] text-[16px]">
+                      Thông tin công ty
+                    </Link>
+                  </li>
+                  <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
+                    <Link href="" className="text-white font-[600] text-[16px]">
+                      Quản lý công việc
+                    </Link>
+                  </li>
+                  <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
+                    <Link href="" className="text-white font-[600] text-[16px]">
+                      Quản lý CV
+                    </Link>
+                  </li>
+                  <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2"
+                    onClick={handleLogout}
+                  >
+                      Đăng xuất
+                  </li>
+                </ul>
+              </>
+            )}
           </>
         ) : (
           <>

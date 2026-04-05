@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
+import { useEffect } from "react";
 import JustValidate from "just-validate";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-export const FormLogin = () => {
-  const router = useRouter();
-
-  useEffect(() => {
+export const FormLogin=()=>{
+    const router=useRouter();
+    useEffect(() => {
     const validator = new JustValidate("#loginForm");
 
     validator
       .addField('#email', [
         {
           rule: 'required',
-          errorMessage: 'Vui lòng nhập email của bạn!',
+          errorMessage: 'Vui lòng nhập email!',
         },
         {
           rule: 'email',
@@ -55,14 +54,13 @@ export const FormLogin = () => {
           email: email,
           password: password
         };
-  
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/login`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
           body: JSON.stringify(dataFinal),
-          credentials: "include" // Giữ cookie
+          credentials: "include",
         })
           .then(res => res.json())
           .then(data => {
@@ -71,48 +69,47 @@ export const FormLogin = () => {
             }
   
             if(data.code == "success") {
-              console.log(data);
               router.push("/");
             }
           })
       });
-
+      
     return () => {
       validator.destroy();
     };
   }, []);
-
-  return (
+    return (
     <>
-      <form id="loginForm" action="" className="grid grid-cols-1 gap-y-[15px]">
-        <div className="">
-          <label htmlFor="email" className="block font-[500] text-[14px] text-black mb-[5px]">
-            Email *
-          </label>
-          <input 
-            type="email" 
-            name="email" 
-            id="email" 
-            className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black"
-          />
-        </div>
-        <div className="">
-          <label htmlFor="password" className="block font-[500] text-[14px] text-black mb-[5px]">
-            Mật khẩu *
-          </label>
-          <input 
-            type="password" 
-            name="password" 
-            id="password" 
-            className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black"
-          />
-        </div>
-        <div className="">
-          <button className="bg-[#0088FF] rounded-[4px] w-[100%] h-[48px] px-[20px] font-[700] text-[16px] text-white">
-            Đăng nhập
-          </button>
-        </div>
-      </form>
+      
+            <form id="loginForm" className="grid grid-cols-1 gap-y-[15px]">
+              <div className="">
+                <label htmlFor="email" className="block font-[500] text-[14px] text-black mb-[5px]">
+                  Email *
+                </label>
+                <input 
+                  type="email" 
+                  name="" 
+                  id="email" 
+                  className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black"
+                />
+              </div>
+              <div className="">
+                <label htmlFor="password" className="block font-[500] text-[14px] text-black mb-[5px]">
+                  Mật khẩu *
+                </label>
+                <input 
+                  type="password" 
+                  name="" 
+                  id="password" 
+                  className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black"
+                />
+              </div>
+              <div className="">
+                <button className="bg-[#0088FF] rounded-[4px] w-[100%] h-[48px] px-[20px] font-[700] text-[16px] text-white">
+                  Đăng nhập
+                </button>
+              </div>
+            </form>
     </>
   )
 }

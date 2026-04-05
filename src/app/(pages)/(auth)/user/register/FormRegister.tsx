@@ -92,6 +92,10 @@ export const FormRegiter = () => {
             }
           })
       });
+
+    return () => {
+      validator.destroy();
+    };
   }, []);
 
   return (
