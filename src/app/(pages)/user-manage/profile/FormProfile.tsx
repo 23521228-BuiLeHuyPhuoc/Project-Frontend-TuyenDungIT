@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import { useAuth } from "@/hooks/useAuth"
+import { useAuth } from "@/hooks/useAuth";
+import { Toaster, toast } from 'sonner';
 import { useEffect, useState } from "react";
 import JustValidate from "just-validate";
 import { FilePond, registerPlugin } from 'react-filepond';
@@ -106,7 +107,14 @@ export const FormProfile = () => {
       })
         .then(res => res.json())
         .then(data => {
-          alert(data.message);
+          if(data.code=='success')
+          {
+          toast.success(data.message);
+          }
+          if(data.code=='error')
+          {
+            toast.error(data.message);
+          }
         })
         
         // Reset ngầm cho lần bấm sau
@@ -117,6 +125,7 @@ export const FormProfile = () => {
 
   return (
     <>
+    <Toaster position="top-right" richColors  />
       {infoUser && (
         <form onSubmit={handleSubmit} id="profileForm" action="" className="grid sm:grid-cols-2 grid-cols-1 gap-x-[20px] gap-y-[15px]">
           <div className="sm:col-span-2">
