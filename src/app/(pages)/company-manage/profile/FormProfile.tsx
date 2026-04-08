@@ -269,7 +269,7 @@ export const FormProfile = () => {
             </label>
             <EditorMCE
               editorRef={editorRef}
-              initialValue={infoCompany.description}
+              value={infoCompany.description}
             />  
           </div>
           <div className="sm:col-span-2">
