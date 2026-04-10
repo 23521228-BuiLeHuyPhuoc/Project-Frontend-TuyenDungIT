@@ -4,11 +4,13 @@ import Link from "next/link"
 import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 import { useEffect, useState } from "react";
 import {positionList,workingFromList} from "../../../../../../config/variable"
+import { ButtonDelete } from "@/app/components/button/ButtonDelete";
 
 export const JobList =()=>{
     const [jobList, setJobList] = useState<any[]>([]);
     const [page,setPage]=useState(1);
     const[totalPage,setTotalPage]=useState();
+    const [count,setCount]=useState(0);
     useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/job/list?page=${page}`, {
       method: "GET",
@@ -27,7 +29,9 @@ const handlePagination=(event:any)=>{
   const value=event.target.value;
   setPage(parseInt(value));
 }
-
+const handleDeleteSuccess=(id:string)=>{
+   setJobList(prev=>prev.filter(job=>job.id!==id))
+}
     return (
         <>
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
@@ -93,9 +97,11 @@ const handlePagination=(event:any)=>{
                 <Link href={`/company-manage/job/edit/${item.id}`} className="bg-[#FFB200] rounded-[4px] font-[400] text-[14px] text-black inline-block py-[8px] px-[20px]">
                   Sửa
                 </Link>
-                <Link href="#" className="bg-[#FF0000] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]">
-                  Xóa
-                </Link>
+                <ButtonDelete 
+                api={`${process.env.NEXT_PUBLIC_API_URL}/company/job/delete/${item.id}`}
+                item={item}
+                onDeleteSuccess={handleDeleteSuccess}
+                />
               </div>
             </div>
               )
