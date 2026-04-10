@@ -4,10 +4,13 @@ import Link from "next/link"
 import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 import { useEffect, useState } from "react";
 import {positionList,workingFromList} from "../../../../../../config/variable"
+
 export const JobList =()=>{
     const [jobList, setJobList] = useState<any[]>([]);
+    const [page,setPage]=useState(1);
+    const[totalPage,setTotalPage]=useState();
     useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/job/list`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/job/list?page=${page}`, {
       method: "GET",
       credentials: "include", // Gửi kèm cookie
     })
@@ -15,12 +18,15 @@ export const JobList =()=>{
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
-          console.log(data.jobs);
+          setTotalPage(data.totalPage);
         }
       })
-  }, []);
+  }, [page]);
 
-
+const handlePagination=(event:any)=>{
+  const value=event.target.value;
+  setPage(parseInt(value));
+}
 
     return (
         <>
@@ -95,7 +101,22 @@ export const JobList =()=>{
               )
 
             })}
+
           </div>
+          {totalPage&&(
+            <div className="mt-[30px]">
+            <select name="" className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400]
+             text-[16px] text-[#414042]"
+             onChange={handlePagination}
+             >
+              {Array(totalPage).fill("").map((_,index)=>{
+                return (
+                  <option key={index} value={index+1}>Trang {index+1}</option>
+                )
+              })}
+            </select>
+          </div>
+          )}
         </>
     )
 }
