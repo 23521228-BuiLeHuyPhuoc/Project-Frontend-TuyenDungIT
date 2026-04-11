@@ -19,25 +19,46 @@ export const HeaderMenu = (
           children: [
             {
               name: "ReactJS",
-              link: "#",
+              link: "/search?language=reactjs",
               children:null
             },
             {
-              name: "NodeJS",
-              link: "#",
+              name: "HTML5",
+              link: "/search?language=html5",
+              children:null
+            },
+            {
+              name: "CSS3",
+              link: "/search?language=css3",
+              children:null
+            },
+            {
+              name: "Javascript",
+              link: "/search?language=javascript",
               children:null
             }
           ]
         },
         {
-          name: "Việc làm IT theo công ty",
-          link: "#",
-              children:null
-        },
-        {
           name: "Việc làm IT theo thành phố",
           link: "#",
-              children:null
+              children:[
+                {
+                  name:"Hà Nội",
+                  link:"/search?city=Hà Nội",
+                  children:null
+                },
+                {
+                  name:"Đà Nẵng",
+                  link:"/search?city=Đà Nẵng",
+                  children:null
+                },
+                {
+                  name:"Hồ Chí Minh",
+                  link:"/search?city=Hồ Chí Minh",
+                  children:null
+                }
+              ]
         }
       ]
     },
@@ -48,17 +69,17 @@ export const HeaderMenu = (
         {
           name: "FPT Software",
           link: "#",
-              children:null
+          children:null
         },
         {
           name: "Techcombank",
           link: "#",
-              children:null
+          children:null
         },
         {
           name: "MB Bank",
           link: "#",
-              children:null
+          children:null
         }
       ]
     },
@@ -120,7 +141,7 @@ export const HeaderMenu = (
                     )}
                     {menuSub1.children && (
                       <ul className="lg:absolute relative top-[0px] lg:left-[100%] left-0 lg:w-[280px] w-full bg-[#000065] hidden group-hover/sub-2:block z-[999]">
-                        {menu.children.map((menuSub2, indexSub2) => (
+                        {menuSub1.children.map((menuSub2, indexSub2) => (
                           <li 
                             key={indexSub2}
                             className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096]"
