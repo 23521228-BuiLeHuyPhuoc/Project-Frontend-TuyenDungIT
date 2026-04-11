@@ -1,9 +1,9 @@
 import { Metadata } from "next"
-import { FormRegiter } from "./FormRegister"
+import { FormRegiser } from "./FormRegister"
 
 export const metadata: Metadata = {
   title: "Đăng ký (Ứng viên)",
-  description: "Mô tả trang đăng ký (Ứng viên)...",
+  description: "Mô tả trang đăng ký (Ứng viên)..."
 }
 
 export default function UserRegisterPage() {
@@ -15,7 +15,7 @@ export default function UserRegisterPage() {
             <h1 className="font-[700] text-[20px] text-black text-center mb-[20px]">
               Đăng ký (Ứng viên)
             </h1>
-            <FormRegiter />
+            <FormRegiser />
           </div>
         </div>
       </div>

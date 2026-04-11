@@ -4,7 +4,7 @@ import JustValidate from "just-validate";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export const FormRegiter = () => {
+export const FormRegiser = () => {
   const router = useRouter();
 
   useEffect(() => {
