@@ -6,6 +6,30 @@ export const metadata: Metadata = {
   description: "Mô tả trang danh sách công ty...",
 }
 
+const dummyCompanies = [
+  {
+    id: "1",
+    logo: "/assets/images/demo-cong-ty-1.png",
+    companyName: "LG Electronics Development Vietnam (LGEDV)",
+    cityName: "Ho Chi Minh",
+    totalJob: 5
+  },
+  {
+    id: "2",
+    logo: "/assets/images/demo-cong-ty-1.png",
+    companyName: "Samsung Electronics Vietnam",
+    cityName: "Ha Noi",
+    totalJob: 8
+  },
+  {
+    id: "3",
+    logo: "/assets/images/demo-cong-ty-1.png",
+    companyName: "Apple Vietnam",
+    cityName: "Da Nang",
+    totalJob: 3
+  }
+]
+
 export default function CompanyListPage() {
   return (
     <>
@@ -18,7 +42,9 @@ export default function CompanyListPage() {
           {/* Wrap */}
           <div className="grid lg:grid-cols-3 grid-cols-2 sm:gap-[20px] gap-x-[10px] gap-y-[20px]">
             {/* Item */}
-            <CardCompanyItem />
+            {dummyCompanies.map(company => (
+              <CardCompanyItem key={company.id} item={company} />
+            ))}
           </div>
 
           <div className="mt-[30px]">
