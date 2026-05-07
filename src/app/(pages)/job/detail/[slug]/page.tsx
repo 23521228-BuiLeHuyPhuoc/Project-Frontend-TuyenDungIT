@@ -2,13 +2,26 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { FaArrowRightLong, FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
+import { positionList } from "../../../../../../config/variable"
 
 export const metadata: Metadata = {
   title: "Chi tiết công việc",
   description: "Mô tả trang chi tiết công việc...",
 }
 
-export default function JobDetailPage() {
+export default async function JobDetailPage({params}:{
+  params:{
+    slug:string
+  }
+}) {
+  const {slug}=await params;
+  const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job/detail/${slug}`,{})
+  const data=await res.json();
+  let jobDetail:any=null;
+  if(data.code=="success")
+  {
+    jobDetail=data.jobDetail;
+  }
   return (
     <>
       {/* Chi tiết công việc */}
@@ -21,61 +34,54 @@ export default function JobDetailPage() {
               {/* Thông tin công việc */}
               <div className="border border-[#DEDEDE] rounded-[8px] p-[20px]">
                 <h1 className="font-[700] sm:text-[28px] text-[24px] text-[#121212] mb-[10px]">
-                  Front End Developer ( Javascript, ReactJS)
+                  {jobDetail?.title}
                 </h1>
                 <div className="font-[400] text-[16px] text-[#414042] mb-[10px]">
-                  LG CNS Việt Nam
+                  {jobDetail?.companyname}
                 </div>
                 <div className="font-[700] text-[20px] text-[#0088FF] sm:mb-[20px] mb-[10px]">
-                  1.000$ - 1.500$
+                  {jobDetail?.salaryMin.toLocaleString("vi-VN")} - {jobDetail?.salaryMax.toLocaleString("vi-VN")} VND
                 </div>
                 <Link href="#" className="bg-[#0088FF] rounded-[4px] font-[700] text-[16px] text-white flex items-center justify-center h-[48px] mb-[20px]">
                   Ứng tuyển
                 </Link>
                 <div className="grid grid-cols-3 sm:gap-[16px] gap-[8px] mb-[20px]">
-                  <img 
-                    src="/assets/images/demo-banner-1.jpg" 
-                    alt="" 
-                    className="aspect-[232/145] object-cover rounded-[4px]"
-                  />
-                  <img 
-                    src="/assets/images/demo-banner-2.jpg" 
-                    alt="" 
-                    className="aspect-[232/145] object-cover rounded-[4px]"
-                  />
-                  <img 
-                    src="/assets/images/demo-banner-3.jpg" 
-                    alt="" 
-                    className="aspect-[232/145] object-cover rounded-[4px]" 
-                  />
+                  {jobDetail?.images?.length>0?(
+                    jobDetail.images.map((image:string,index:number)=>(
+                      <img 
+                        key={index}
+                        src={image} 
+                        alt="" 
+                        className="aspect-[232/145] object-cover rounded-[4px]"
+                      />
+                    ))
+                  ) : null}
                 </div>
                 <div className="flex items-center gap-[8px] font-[400] text-[14px] text-[#121212] mb-[10px]">
-                  <FaUserTie className="text-[16px]" /> Fresher
+                  <FaUserTie className="text-[16px]" /> {jobDetail.position=positionList.find(item=>item.value==jobDetail.workingFrom)?.label}
                 </div>
                 <div className="flex items-center gap-[8px] font-[400] text-[14px] text-[#121212] mb-[10px]">
-                  <FaBriefcase className="text-[16px]" /> Tại văn phòng
+                  <FaBriefcase className="text-[16px]" /> {jobDetail?.workingForm}
                 </div>
                 <div className="flex items-center gap-[8px] font-[400] text-[14px] text-[#121212] mb-[10px]">
-                  <FaLocationDot className="text-[16px]" /> Tầng 15, tòa Keangnam Landmark 72, Mễ Trì, Nam Tu Liem, Ha Noi
+                  <FaLocationDot className="text-[16px]" /> {jobDetail?.companyAddress}
                 </div>
                 <div className="flex flex-wrap gap-[8px]">
-                  <div className="border border-[#DEDEDE] rounded-[20px] font-[400] text-[12px] text-[#414042] py-[6px] px-[16px]">
-                    ReactJS
-                  </div>
-                  <div className="border border-[#DEDEDE] rounded-[20px] font-[400] text-[12px] text-[#414042] py-[6px] px-[16px]">
-                    NextJS
-                  </div>
-                  <div className="border border-[#DEDEDE] rounded-[20px] font-[400] text-[12px] text-[#414042] py-[6px] px-[16px]">
-                    Javascript
-                  </div>
+                  {jobDetail?.technologies?.map((tech: string, index: number) => (
+                    <div key={index} className="border border-[#DEDEDE] rounded-[20px] font-[400] text-[12px] text-[#414042] py-[6px] px-[16px]">
+                      {tech}
+                    </div>
+                  ))}
                 </div>
               </div>
               {/* Hết Thông tin công việc */}
 
               {/* Mô tả chi tiết */}
               <div className="border border-[#DEDEDE] rounded-[8px] p-[20px] mt-[20px]">
-                Mô tả chi tiết
+                Mô tả chi tiết:
+                <div dangerouslySetInnerHTML={{__html:jobDetail.description}} />
               </div>
+
               {/* Hết Mô tả chi tiết */}
 
               {/* Form ứng tuyển */}
@@ -129,7 +135,7 @@ export default function JobDetailPage() {
                   </div>
                   <div className="flex-1">
                     <div className="font-[700] text-[18px] text-[#121212] mb-[10px]">
-                      LG CNS Việt Nam
+                      {jobDetail?.companyname}
                     </div>
                     <Link href="#" className="flex items-center gap-[8px] font-[400] text-[16px] text-[#0088FF]">
                       Xem công ty <FaArrowRightLong className="" />
@@ -142,7 +148,7 @@ export default function JobDetailPage() {
                       Mô hình công ty
                     </div>
                     <div className="text-[#121212]">
-                      Sản phẩm
+                      {jobDetail?.companyModel}
                     </div>
                   </div>
                   <div className="flex flex-wrap justify-between font-[400] text-[16px]">
@@ -150,7 +156,7 @@ export default function JobDetailPage() {
                       Quy mô công ty
                     </div>
                     <div className="text-[#121212]">
-                      151 - 300 nhân viên
+                      {jobDetail?.companyEmployees}
                     </div>
                   </div>
                   <div className="flex flex-wrap justify-between font-[400] text-[16px]">
@@ -158,7 +164,7 @@ export default function JobDetailPage() {
                       Thời gian làm việc
                     </div>
                     <div className="text-[#121212]">
-                      Thứ 2 - Thứ 6
+                      {jobDetail?.companyWorkingTime}
                     </div>
                   </div>
                   <div className="flex flex-wrap justify-between font-[400] text-[16px]">
@@ -166,7 +172,7 @@ export default function JobDetailPage() {
                       Làm việc ngoài giờ
                     </div>
                     <div className="text-[#121212]">
-                      Không có OT
+                      {jobDetail?.companyOvertime}
                     </div>
                   </div>
                 </div>
