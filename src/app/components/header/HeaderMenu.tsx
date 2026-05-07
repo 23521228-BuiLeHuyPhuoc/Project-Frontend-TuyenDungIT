@@ -68,17 +68,17 @@ export const HeaderMenu = (
       children: [
         {
           name: "FPT Software",
-          link: "#",
+          link: "/search?company=FPT Software",
           children:null
         },
         {
           name: "Techcombank",
-          link: "#",
+          link: "/search?company=Techcombank",
           children:null
         },
         {
           name: "MB Bank",
-          link: "#",
+          link: "/search?company=MB Bank",
           children:null
         }
       ]
