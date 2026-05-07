@@ -1,28 +1,43 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { CardJobItem } from "@/app/components/card/CardJobItem"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react";
+import { positionList } from "../../../../config/variable";
 
 export const SearchContainer = () => {
+  const router=useRouter();
   const searchParams = useSearchParams();
   const language = searchParams.get("language") || "";
   const city = searchParams.get("city") || "";
   const company = searchParams.get("company") || "";
   const keyword = searchParams.get("keyword") || "";
+  const position= searchParams.get("position") || "";
   const [jobList, setJobList] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}&company=${company}&keyword=${keyword}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}&company=${company}&keyword=${keyword}&position=${position}`)
       .then(res => res.json())
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
         }
       })
-  }, [language, city, company, keyword]);
+  }, [language, city, company, keyword, position]);
 
-  console.log(jobList);
+  const handleFilterPosition=(event:any)=>{
+    const value=event.target.value;
+    const params=new URLSearchParams(searchParams.toString());
+    if(value) {
+      params.set("position", value);
+
+    }
+    else{
+      params.delete("position");
+    }
+    router.push(`?${params.toString()}`);
+
+  }
 
   return (
     <>
@@ -41,14 +56,15 @@ export const SearchContainer = () => {
             boxShadow: "0px 4px 20px 0px #0000000F"
           }}
         >
-          <select name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
-            <option value="">Cấp bậc</option>
-            <option value="">Intern</option>
-            <option value="">Fresher</option>
-            <option value="">Junior</option>
-            <option value="">Middle</option>
-            <option value="">Senior</option>
-            <option value="">Manager</option>
+          <select name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] 
+          text-[16px] text-[#414042]"
+          defaultValue={position}
+          onChange={handleFilterPosition}
+          >
+            <option value="">Vị trí công việc</option>
+            {positionList.map((position:any, index:number)=>(
+              <option key={index} value={position.value}>{position.label}</option>
+            ))}
           </select>
           <select name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
             <option value="">Hình thức làm việc</option>
