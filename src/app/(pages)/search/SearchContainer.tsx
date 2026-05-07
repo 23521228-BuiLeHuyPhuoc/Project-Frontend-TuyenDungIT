@@ -1,90 +1,104 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { CardJobItem } from "@/app/components/card/CardJobItem"
+import { positionList, workingFromList } from "../../../../config/variable";
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react";
-import { positionList, workingFromList } from "../../../../config/variable";
 
 export const SearchContainer = () => {
-  const router=useRouter();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const language = searchParams.get("language") || "";
   const city = searchParams.get("city") || "";
-  const workingFrom = searchParams.get("workingFrom") || "";
   const company = searchParams.get("company") || "";
   const keyword = searchParams.get("keyword") || "";
-  const position= searchParams.get("position") || "";
+  const position = searchParams.get("position") || "";
+  const workingFrom = searchParams.get("workingFrom") || "";
   const [jobList, setJobList] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState();
+  const [totalRecord, setTotalRecord] = useState();
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}&company=${company}&keyword=${keyword}&position=${position}&workingFrom=${workingFrom}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}&company=${company}&keyword=${keyword}&position=${position}&workingFrom=${workingFrom}&page=${page}`)
       .then(res => res.json())
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
+          setTotalPage(data.totalPage);
+          setTotalRecord(data.totalRecord);
         }
       })
-  }, [language, city, company, keyword, position, workingFrom]);
+  }, [language, city, company, keyword, position, workingFrom, page]);
 
-  const handleFilterPosition=(event:any)=>{
-    const value=event.target.value;
-    const params=new URLSearchParams(searchParams.toString());
+  const handleFilterPosition = (event: any) => {
+    const value = event.target.value;
+
+    const params = new URLSearchParams(searchParams.toString());
     if(value) {
       params.set("position", value);
-
-    }
-    else{
+    } else {
       params.delete("position");
     }
-    router.push(`?${params.toString()}`);
 
+    router.push(`?${params.toString()}`);
   }
-  const handleFilterWorkingFrom=(event:any)=>{
-    const value=event.target.value;
-    const params=new URLSearchParams(searchParams.toString());
+
+  const handleFilterworkingFrom = (event: any) => {
+    const value = event.target.value;
+
+    const params = new URLSearchParams(searchParams.toString());
     if(value) {
       params.set("workingFrom", value);
-    }
-    else{
+    } else {
       params.delete("workingFrom");
     }
+
     router.push(`?${params.toString()}`);
+  }
+
+  const handlePagination = (event: any) => {
+    const value = event.target.value;
+    setPage(parseInt(value));
   }
 
   return (
     <>
       <div className="container mx-auto px-[16px]">
-          
-        <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
-          {jobList.length} việc làm: 
-          <span className="text-[#0088FF] ml-[6px]">
-            {language} {city} {company} {keyword}
-          </span>
-        </h2>
-      
+        {totalRecord && (
+          <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
+            {totalRecord} việc làm: 
+            <span className="text-[#0088FF] ml-[6px]">
+              {language} {city} {company} {keyword}
+            </span>
+          </h2>
+        )}
+        
         <div 
           className="bg-white rounded-[8px] py-[10px] px-[20px] mb-[30px] flex flex-wrap gap-[12px]"
           style={{
             boxShadow: "0px 4px 20px 0px #0000000F"
           }}
         >
-          <select name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] 
-          text-[16px] text-[#414042]"
-          defaultValue={position}
-          onChange={handleFilterPosition}
+          <select 
+            name="" 
+            className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]"
+            onChange={handleFilterPosition}
+            defaultValue={position}
           >
-            <option value="">Vị trí công việc</option>
-            {positionList.map((position:any, index:number)=>(
-              <option key={index} value={position.value}>{position.label}</option>
+            <option value="">Cấp bậc</option>
+            {positionList.map((item:any, index:any) => (
+              <option key={index} value={item.value}>{item.label}</option>
             ))}
           </select>
-          <select name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]"
-          defaultValue={workingFrom}
-          onChange={handleFilterWorkingFrom}
-          >  
-          <option value="">Hình thức làm việc</option>
-
-            {workingFromList.map((item:any, index:number)=>(
+          <select 
+            name="" 
+            className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]"
+            onChange={handleFilterworkingFrom}
+            defaultValue={workingFrom}
+          >
+            <option value="">Hình thức làm việc</option>
+            {workingFromList.map((item:any, index:any) => (
               <option key={index} value={item.value}>{item.label}</option>
             ))}
           </select>
@@ -96,13 +110,19 @@ export const SearchContainer = () => {
           ))}
         </div>
 
+        {totalPage && (
         <div className="mt-[30px]">
-          <select name="" className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042] outline-none">
-            <option value="">Trang 1</option>
-            <option value="">Trang 2</option>
-            <option value="">Trang 3</option>
+          <select 
+            name="" 
+            className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]"
+            onChange={handlePagination}
+          >
+            {Array(totalPage).fill("").map((item, index) => (
+              <option key={index} value={index+1}>Trang {index+1}</option>
+            ))}
           </select>
         </div>
+      )}
 
       </div>
     </>
