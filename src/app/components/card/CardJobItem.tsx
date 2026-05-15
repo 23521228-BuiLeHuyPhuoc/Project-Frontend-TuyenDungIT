@@ -10,7 +10,7 @@ export const CardJobItem = (props: {
   const { item } = props;
 
   const position = positionList.find((pos: { value: any; }) => pos.value === item.position)?.label;
-  const workingFrom = workingFromList.find((work: { value: any; }) => work.value === item.workingFrom)?.label;
+  const workingFrom = workingFromList.find((work: { value: any; }) => work.value === item.workingForm)?.label;
 
   return (
     <>

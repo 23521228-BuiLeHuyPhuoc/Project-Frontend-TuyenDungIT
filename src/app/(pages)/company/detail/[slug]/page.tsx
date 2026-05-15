@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Metadata } from "next"
 import { FaLocationDot } from "react-icons/fa6"
-import { CardJobItem } from "@/app/components/card/CardJobItem"
 
 export const metadata: Metadata = {
   title: "Chi tiết công ty",
@@ -71,11 +70,11 @@ export default function CompanyDetailPage() {
           {/* Việc làm */}
           <div className="mt-[30px]">
             <h2 className="font-[700] text-[28px] text-[#121212] mb-[20px]">
-              Công ty có 6 việc làm
+              Việc làm của công ty
             </h2>
-      
-            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
-              <CardJobItem />
+
+            <div className="border border-[#DEDEDE] rounded-[8px] p-[20px] text-center font-[400] text-[16px] text-[#414042]">
+              Chưa có dữ liệu việc làm để hiển thị.
             </div>
           </div>
           {/* Hết Việc làm */}

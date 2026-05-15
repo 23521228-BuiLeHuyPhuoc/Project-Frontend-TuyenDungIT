@@ -1,22 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
 import { FaUserTie } from "react-icons/fa6"
 
-interface CardCompanyItemProps {
-  item: {
-    id: string;
-    logo: string;
-    companyName: string;
-    cityName: string;
-    totalJob: number;
-  }
-}
+export const CardCompanyItem = (props: {
+  item: any
+}) => {
+  const { item } = props;
 
-export const CardCompanyItem = ({ item }: CardCompanyItemProps) => {
   return (
     <>
       <Link 
-        href="" 
+        href={`/company/detail/${item.id}`} 
         className="border border-[#DEDEDE] rounded-[8px] flex flex-col relative truncate"
         style={{
           background: "linear-gradient(180deg, #F6F6F6 2.38%, #FFFFFF 70.43%)"
@@ -34,7 +29,7 @@ export const CardCompanyItem = ({ item }: CardCompanyItemProps) => {
           }}
         >
           <img 
-            src={item.logo} 
+            src={item.logo}
             alt={item.companyName}
             className="w-[100%] h-[100%] object-contain"
           />

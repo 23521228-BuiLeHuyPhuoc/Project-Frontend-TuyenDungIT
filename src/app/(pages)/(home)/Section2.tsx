@@ -10,13 +10,9 @@ export const Section2 = () => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/list?limitItems=9`)
       .then(res => res.json())
       .then(data => {
-        console.log("API Response:", data);
-        if(data.code == "success" && data.companyList) {
+        if(data.code == "success") {
           setCompanyList(data.companyList);
         }
-      })
-      .catch(error => {
-        console.log("Fetch Error:", error);
       })
   }, []);
 
@@ -30,13 +26,9 @@ export const Section2 = () => {
           {/* Wrap */}
           <div className="grid lg:grid-cols-3 grid-cols-2 sm:gap-[20px] gap-x-[10px] gap-y-[20px]">
             {/* Item */}
-            {companyList && companyList.length > 0 ? (
-              companyList.map(item => (
-                <CardCompanyItem key={item.id} item={item} />
-              ))
-            ) : (
-              <p>Không có công ty nào</p>
-            )}
+            {companyList.map(item => (
+              <CardCompanyItem key={item.id} item={item} />
+            ))}
           </div>
         </div>
       </div>
