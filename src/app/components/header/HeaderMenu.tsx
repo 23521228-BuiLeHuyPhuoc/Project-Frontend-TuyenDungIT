@@ -7,7 +7,7 @@ export const HeaderMenu = (
   }
 ) => {
   const { showMenu } = props;
-  const {isLogin}=useAuth();
+  const { isLogin } = useAuth();
   const menuList = [
     {
       name: "Việc Làm IT",
@@ -20,83 +20,83 @@ export const HeaderMenu = (
             {
               name: "ReactJS",
               link: "/search?language=reactjs",
-              children:null
+              children: null
             },
             {
               name: "HTML5",
               link: "/search?language=html5",
-              children:null
+              children: null
             },
             {
               name: "CSS3",
               link: "/search?language=css3",
-              children:null
+              children: null
             },
             {
               name: "Javascript",
               link: "/search?language=javascript",
-              children:null
+              children: null
             }
           ]
         },
         {
           name: "Việc làm IT theo thành phố",
           link: "#",
-              children:[
-                {
-                  name:"Hà Nội",
-                  link:"/search?city=Hà Nội",
-                  children:null
-                },
-                {
-                  name:"Đà Nẵng",
-                  link:"/search?city=Đà Nẵng",
-                  children:null
-                },
-                {
-                  name:"Hồ Chí Minh",
-                  link:"/search?city=Hồ Chí Minh",
-                  children:null
-                }
-              ]
+          children: [
+            {
+              name: "Hà Nội",
+              link: "/search?city=Hà Nội",
+              children: null
+            },
+            {
+              name: "Đà Nẵng",
+              link: "/search?city=Đà Nẵng",
+              children: null
+            },
+            {
+              name: "Hồ Chí Minh",
+              link: "/search?city=Hồ Chí Minh",
+              children: null
+            }
+          ]
         }
       ]
     },
     {
       name: "Top Công Ty IT",
-      link: "#",
+      link: "/company/list",
       children: [
         {
           name: "FPT Software",
           link: "/search?company=FPT Software",
-          children:null
+          children: null
         },
         {
           name: "Techcombank",
           link: "/search?company=Techcombank",
-          children:null
+          children: null
         },
         {
           name: "MB Bank",
           link: "/search?company=MB Bank",
-          children:null
+          children: null
         }
       ]
     },
     {
       name: "Nhà Tuyển Dụng",
       link: "#",
-      isLogin:false,
+      isLogin: false,
       children: [
         {
           name: "Đăng Nhập",
           link: "/company/login",
-              children:null
+          children: null
         },
         {
           name: "Đăng Ký",
           link: "/company/register",
-              children:null
+          children: null
         }
       ]
     }
@@ -126,37 +126,37 @@ export const HeaderMenu = (
               {menu.children && (
                 <ul className="lg:absolute relative lg:top-[100%] top-0 left-[0px] lg:w-[280px] w-full bg-[#000065] hidden group-hover/sub-1:block z-[999]">
                   {menu.children.map((menuSub1, indexSub1) => (
-                    <li 
+                    <li
                       key={indexSub1}
                       className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2 flex-wrap"
                     >
-                    <Link 
-                      href={menuSub1.link} 
-                      className="text-white font-[600] text-[16px]"
-                    >
-                      {menuSub1.name}
-                    </Link>
-                    {menuSub1.children && (
-                      <FaAngleRight className="text-white text-[16px]" />
-                    )}
-                    {menuSub1.children && (
-                      <ul className="lg:absolute relative top-[0px] lg:left-[100%] left-0 lg:w-[280px] w-full bg-[#000065] hidden group-hover/sub-2:block z-[999]">
-                        {menuSub1.children.map((menuSub2, indexSub2) => (
-                          <li 
-                            key={indexSub2}
-                            className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096]"
-                          >
-                            <a 
-                              href={menuSub2.link}
-                              className="text-white font-[600] text-[16px]"
+                      <Link
+                        href={menuSub1.link}
+                        className="text-white font-[600] text-[16px]"
+                      >
+                        {menuSub1.name}
+                      </Link>
+                      {menuSub1.children && (
+                        <FaAngleRight className="text-white text-[16px]" />
+                      )}
+                      {menuSub1.children && (
+                        <ul className="lg:absolute relative top-[0px] lg:left-[100%] left-0 lg:w-[280px] w-full bg-[#000065] hidden group-hover/sub-2:block z-[999]">
+                          {menuSub1.children.map((menuSub2, indexSub2) => (
+                            <li
+                              key={indexSub2}
+                              className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096]"
                             >
-                              {menuSub2.name}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
+                              <a
+                                href={menuSub2.link}
+                                className="text-white font-[600] text-[16px]"
+                              >
+                                {menuSub2.name}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
                   ))}
                 </ul>
               )}
