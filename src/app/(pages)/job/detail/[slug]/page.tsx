@@ -10,18 +10,17 @@ export const metadata: Metadata = {
   description: "Mô tả trang chi tiết công việc...",
 }
 
-export default async function JobDetailPage({params}:{
-  params:{
-    slug:string
+export default async function JobDetailPage({ params }: {
+  params: {
+    slug: string
   }
 }) {
-  const {slug}=await params;
-  const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job/detail/${slug}`,{})
-  const data=await res.json();
-  let jobDetail:any=null;
-  if(data.code=="success")
-  {
-    jobDetail=data.jobDetail;
+  const { slug } = await params;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job/detail/${slug}`, {})
+  const data = await res.json();
+  let jobDetail: any = null;
+  if (data.code == "success") {
+    jobDetail = data.jobDetail;
   }
   return (
     <>
@@ -47,19 +46,19 @@ export default async function JobDetailPage({params}:{
                   Ứng tuyển
                 </Link>
                 <div className="grid grid-cols-3 sm:gap-[16px] gap-[8px] mb-[20px]">
-                  {jobDetail?.images?.length>0?(
-                    jobDetail.images.map((image:string,index:number)=>(
-                      <img 
+                  {jobDetail?.images?.length > 0 ? (
+                    jobDetail.images.map((image: string, index: number) => (
+                      <img
                         key={index}
-                        src={image} 
-                        alt="" 
+                        src={image}
+                        alt=""
                         className="aspect-[232/145] object-cover rounded-[4px]"
                       />
                     ))
                   ) : null}
                 </div>
                 <div className="flex items-center gap-[8px] font-[400] text-[14px] text-[#121212] mb-[10px]">
-                  <FaUserTie className="text-[16px]" /> {jobDetail.position=positionList.find(item=>item.value==jobDetail.workingFrom)?.label}
+                  <FaUserTie className="text-[16px]" /> {jobDetail.position = positionList.find(item => item.value == jobDetail.workingFrom)?.label}
                 </div>
                 <div className="flex items-center gap-[8px] font-[400] text-[14px] text-[#121212] mb-[10px]">
                   <FaBriefcase className="text-[16px]" /> {jobDetail?.workingForm}
@@ -80,7 +79,7 @@ export default async function JobDetailPage({params}:{
               {/* Mô tả chi tiết */}
               <div className="border border-[#DEDEDE] rounded-[8px] p-[20px] mt-[20px]">
                 Mô tả chi tiết:
-                <div dangerouslySetInnerHTML={{__html:jobDetail.description}} />
+                <div dangerouslySetInnerHTML={{ __html: jobDetail.description }} />
               </div>
 
               {/* Hết Mô tả chi tiết */}
@@ -90,7 +89,7 @@ export default async function JobDetailPage({params}:{
                 <h2 className="font-[700] text-[20px] text-black mb-[20px]">
                   Ứng tuyển ngay
                 </h2>
-                <FormApply jobId={jobDetail.id}/>
+                <FormApply jobId={jobDetail.id} />
               </div>
               {/* Hết Form ứng tuyển */}
             </div>
@@ -100,8 +99,8 @@ export default async function JobDetailPage({params}:{
               <div className="border border-[#DEDEDE] rounded-[8px] p-[20px]">
                 <div className="flex gap-[12px]">
                   <div className="w-[100px]">
-                    <img 
-                      src="/assets/images/demo-cong-ty-2.jpg" 
+                    <img
+                      src="/assets/images/demo-cong-ty-2.jpg"
                       alt="LG CNS Việt Nam"
                       className="aspect-square object-cover rounded-[4px]"
                     />
@@ -110,7 +109,7 @@ export default async function JobDetailPage({params}:{
                     <div className="font-[700] text-[18px] text-[#121212] mb-[10px]">
                       {jobDetail?.companyname}
                     </div>
-                    <Link href="#" className="flex items-center gap-[8px] font-[400] text-[16px] text-[#0088FF]">
+                    <Link href={`/company/detail/${jobDetail?.companyId}`} className="flex items-center gap-[8px] font-[400] text-[16px] text-[#0088FF]">
                       Xem công ty <FaArrowRightLong className="" />
                     </Link>
                   </div>
