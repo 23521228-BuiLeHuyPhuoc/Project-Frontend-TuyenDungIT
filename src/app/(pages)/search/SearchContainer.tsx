@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { CardJobItem } from "@/app/components/card/CardJobItem"
-import { positionList, workingFromList } from "../../../../config/variable";
+import { positionList, workingFormList } from "../../../../config/variable";
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react";
 
@@ -13,29 +13,29 @@ export const SearchContainer = () => {
   const company = searchParams.get("company") || "";
   const keyword = searchParams.get("keyword") || "";
   const position = searchParams.get("position") || "";
-  const workingFrom = searchParams.get("workingFrom") || "";
+  const workingForm = searchParams.get("workingForm") || "";
   const [jobList, setJobList] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState();
   const [totalRecord, setTotalRecord] = useState();
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}&company=${company}&keyword=${keyword}&position=${position}&workingFrom=${workingFrom}&page=${page}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}&company=${company}&keyword=${keyword}&position=${position}&workingForm=${workingForm}&page=${page}`)
       .then(res => res.json())
       .then(data => {
-        if(data.code == "success") {
+        if (data.code == "success") {
           setJobList(data.jobs);
           setTotalPage(data.totalPage);
           setTotalRecord(data.totalRecord);
         }
       })
-  }, [language, city, company, keyword, position, workingFrom, page]);
+  }, [language, city, company, keyword, position, workingForm, page]);
 
   const handleFilterPosition = (event: any) => {
     const value = event.target.value;
 
     const params = new URLSearchParams(searchParams.toString());
-    if(value) {
+    if (value) {
       params.set("position", value);
     } else {
       params.delete("position");
@@ -44,14 +44,14 @@ export const SearchContainer = () => {
     router.push(`?${params.toString()}`);
   }
 
-  const handleFilterworkingFrom = (event: any) => {
+  const handleFilterWorkingForm = (event: any) => {
     const value = event.target.value;
 
     const params = new URLSearchParams(searchParams.toString());
-    if(value) {
-      params.set("workingFrom", value);
+    if (value) {
+      params.set("workingForm", value);
     } else {
-      params.delete("workingFrom");
+      params.delete("workingForm");
     }
 
     router.push(`?${params.toString()}`);
@@ -67,38 +67,38 @@ export const SearchContainer = () => {
       <div className="container mx-auto px-[16px]">
         {totalRecord && (
           <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
-            {totalRecord} việc làm: 
+            {totalRecord} việc làm:
             <span className="text-[#0088FF] ml-[6px]">
               {language} {city} {company} {keyword}
             </span>
           </h2>
         )}
-        
-        <div 
+
+        <div
           className="bg-white rounded-[8px] py-[10px] px-[20px] mb-[30px] flex flex-wrap gap-[12px]"
           style={{
             boxShadow: "0px 4px 20px 0px #0000000F"
           }}
         >
-          <select 
-            name="" 
+          <select
+            name=""
             className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]"
             onChange={handleFilterPosition}
             defaultValue={position}
           >
             <option value="">Cấp bậc</option>
-            {positionList.map((item:any, index:any) => (
+            {positionList.map((item, index) => (
               <option key={index} value={item.value}>{item.label}</option>
             ))}
           </select>
-          <select 
-            name="" 
+          <select
+            name=""
             className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]"
-            onChange={handleFilterworkingFrom}
-            defaultValue={workingFrom}
+            onChange={handleFilterWorkingForm}
+            defaultValue={workingForm}
           >
             <option value="">Hình thức làm việc</option>
-            {workingFromList.map((item:any, index:any) => (
+            {workingFormList.map((item, index) => (
               <option key={index} value={item.value}>{item.label}</option>
             ))}
           </select>
@@ -111,18 +111,18 @@ export const SearchContainer = () => {
         </div>
 
         {totalPage && (
-        <div className="mt-[30px]">
-          <select 
-            name="" 
-            className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]"
-            onChange={handlePagination}
-          >
-            {Array(totalPage).fill("").map((item, index) => (
-              <option key={index} value={index+1}>Trang {index+1}</option>
-            ))}
-          </select>
-        </div>
-      )}
+          <div className="mt-[30px]">
+            <select
+              name=""
+              className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]"
+              onChange={handlePagination}
+            >
+              {Array(totalPage).fill("").map((item, index) => (
+                <option key={index} value={index + 1}>Trang {index + 1}</option>
+              ))}
+            </select>
+          </div>
+        )}
 
       </div>
     </>

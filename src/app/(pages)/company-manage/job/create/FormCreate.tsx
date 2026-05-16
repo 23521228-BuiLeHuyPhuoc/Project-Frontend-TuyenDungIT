@@ -9,7 +9,7 @@ import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { Toaster, toast } from 'sonner';
-import{positionList,workingFromList} from "../../../../../../config/variable"
+import{positionList,workingFormList} from "../../../../../../config/variable"
 
 // Đăng ký plugins
 registerPlugin(
@@ -172,7 +172,7 @@ export const FormCreate = () => {
                         id="workingForm"
                         className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black"
                     >
-                        {workingFromList.map((item:any,index:number)=>{
+                        {workingFormList.map((item:any,index:number)=>{
                             return(
                                 <option key={index} value={item.value}>{item.label}</option>
                             )

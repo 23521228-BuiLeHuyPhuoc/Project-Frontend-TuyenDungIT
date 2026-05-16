@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
-import { positionList, workingFromList } from "../../../../config/variable" ;
+import { positionList, workingFormList } from "../../../../config/variable" ;
 import Link from "next/link"
 import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 
@@ -10,7 +10,7 @@ export const CardJobItem = (props: {
   const { item } = props;
 
   const position = positionList.find((pos: { value: any; }) => pos.value === item.position)?.label;
-  const workingFrom = workingFromList.find((work: { value: any; }) => work.value === item.workingForm)?.label;
+  const workingForm = workingFormList.find((work: { value: any; }) => work.value === item.workingForm)?.label;
 
   return (
     <>
@@ -51,7 +51,7 @@ export const CardJobItem = (props: {
           <FaUserTie className="text-[16px]" /> {position}
         </div>
         <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
-          <FaBriefcase className="text-[16px]" /> {workingFrom}
+          <FaBriefcase className="text-[16px]" /> {workingForm}
         </div>
         <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
           <FaLocationDot className="text-[16px]" /> {item.companyCity}

@@ -58,7 +58,7 @@ export default async function JobDetailPage({ params }: {
                   ) : null}
                 </div>
                 <div className="flex items-center gap-[8px] font-[400] text-[14px] text-[#121212] mb-[10px]">
-                  <FaUserTie className="text-[16px]" /> {jobDetail.position = positionList.find(item => item.value == jobDetail.workingFrom)?.label}
+                  <FaUserTie className="text-[16px]" /> {jobDetail.position = positionList.find(item => item.value == jobDetail.workingForm)?.label}
                 </div>
                 <div className="flex items-center gap-[8px] font-[400] text-[14px] text-[#121212] mb-[10px]">
                   <FaBriefcase className="text-[16px]" /> {jobDetail?.workingForm}

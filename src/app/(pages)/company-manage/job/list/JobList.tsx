@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 import { useEffect, useState } from "react";
-import {positionList,workingFromList} from "../../../../../../config/variable"
+import {positionList,workingFormList} from "../../../../../../config/variable"
 import { ButtonDelete } from "@/app/components/button/ButtonDelete";
 
 export const JobList =()=>{
@@ -37,7 +37,7 @@ const handleDeleteSuccess=(id:string)=>{
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
             {jobList.map(item=>{
               const position=positionList.find(i=>i.value==item.position);
-              const workingFrom=workingFromList.find(i=>i.value==item.workingForm);
+              const workingForm=workingFormList.find(i=>i.value==item.workingForm);
               return (
                 
                 <div 
@@ -77,7 +77,7 @@ const handleDeleteSuccess=(id:string)=>{
                 <FaUserTie className="text-[16px]" /> {position?position.label:""}
               </div>
               <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
-                <FaBriefcase className="text-[16px]" /> {workingFrom?workingFrom.label:""}
+                <FaBriefcase className="text-[16px]" /> {workingForm?workingForm.label:""}
               </div>
               <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
                 <FaLocationDot className="text-[16px]" /> {item.companyCity}
