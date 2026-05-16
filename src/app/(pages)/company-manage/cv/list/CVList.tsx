@@ -26,9 +26,9 @@ export const CVList = () => {
         <>
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
                 {listCV.map((item) => {
-                    item.jobPosition = positionList.find((itemPos: { value: any; }) => itemPos.value == item.jobPosition)?.label;
-                    item.jobWorkingForm = workingFormList.find((itemWork: { value: any; }) => itemWork.value == item.jobWorkingForm)?.label;
-                    const status = cvStatusList.find((itemStatus: { value: any; }) => itemStatus.value == item.status);
+                    const jobPosition = positionList.find((itemPos) => itemPos.value == item.jobPosition)?.label;
+                    const jobWorkingForm = workingFormList.find((itemWork) => itemWork.value == item.jobWorkingForm)?.label;
+                    const status = cvStatusList.find((itemStatus) => itemStatus.value == item.status);
 
                     return (
                         <div
@@ -59,10 +59,10 @@ export const CVList = () => {
                                 {item.jobSalaryMin.toLocaleString("vi-VN")}$ - {item.jobSalaryMax.toLocaleString("vi-VN")}$
                             </div>
                             <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
-                                <FaUserTie className="text-[16px]" /> {item.jobPosition}
+                                <FaUserTie className="text-[16px]" /> {jobPosition}
                             </div>
                             <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
-                                <FaBriefcase className="text-[16px]" /> {item.jobWorkingForm}
+                                <FaBriefcase className="text-[16px]" /> {jobWorkingForm}
                             </div>
                             <div
                                 className={
